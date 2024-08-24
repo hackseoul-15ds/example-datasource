@@ -1,12 +1,25 @@
 <html>
-  <head>
-    <title>Example DataSource</title>
-  </head>
-  <body>
-    <ul>
-      <li>
-        <a href="user_info.json">user_info.json</a>
-      </li>
-    </ul>
-  </body>
+<head>
+  <title>Example DataSource</title>
+</head>
+<body>
+  <div id="user-info">
+    <input id="username" value="Loading..." readonly/>
+    <input id="nickname" value="Loading..." readonly/>
+    <input id="age" value="Loading..." readonly/>
+    <input id="gender" value="Loading..." readonly/>
+  </div>
+<script>
+  (async () => {
+    const resp = await fetch("https://example-datasource.vercel.app/user_info.json");
+
+    const { username, nickname, age, gender } = await resp.json();
+
+    document.getElementById("username").value = username;
+    document.getElementById("nickname").value = nickname;
+    document.getElementById("age").value = age;
+    document.getElementById("gender").value = gender;
+  })();
+</script>
+</body>
 </html>
