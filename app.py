@@ -39,6 +39,8 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     username = request.form["username"]
+    if username not in users:
+        return "Invalid login info", 400
     session["username"] = username
     return redirect(url_for("home"))
 
