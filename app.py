@@ -54,4 +54,5 @@ def me():
     username = session.get("username")
     if not username:
         return "You are not logged in", 401
-    return users.get(username)
+    user = {"username": username, **users.get(username, {})}
+    return user
