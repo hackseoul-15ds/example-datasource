@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>Home</title>
+  </head>
+  <body>
+    <a id="auth-action-link"></a>
+
+    <div id="user" style="display: none">
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="age">Age:</label>
+        <input id="age" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="gender">Gender:</label>
+        <input id="gender" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="salary">Salary:</label>
+        <input id="salary" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="role">Role:</label>
+        <input id="role" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="work_years">Work Experiences:</label>
+        <input id="work_years" value="Loading..." readonly />
+      </div>
+    </div>
+
+    <script>
+      (async () => {
+        const actionLink = document.getElementById('auth-action-link');
+        try {
+          const resp = await fetch('/me');
+          if (resp.status === 401) {
+            actionLink.href = '/login';
+            actionLink.textContent = 'Login';
+            return;
+          }
+          actionLink.href = '/logout';
+          actionLink.textContent = 'Logout';
+
+          const { name, age, gender, salary, role, work_years } =
+            await resp.json();
+
+          document.getElementById('name').value = name;
+          document.getElementById('age').value = age;
+          document.getElementById('gender').value = gender;
+          document.getElementById('salary').value = salary;
+          document.getElementById('role').value = role;
+          document.getElementById('work_years').value = work_years;
+          document.getElementById('user').style.display = 'block';
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    </script>
+  </body>
+</html>
