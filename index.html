@@ -1,25 +1,59 @@
 <html>
-<head>
-  <title>Example DataSource</title>
-</head>
-<body>
-  <div id="user-info">
-    <input id="username" value="Loading..." readonly/>
-    <input id="nickname" value="Loading..." readonly/>
-    <input id="age" value="Loading..." readonly/>
-    <input id="gender" value="Loading..." readonly/>
-  </div>
-<script>
-  (async () => {
-    const resp = await fetch("https://example-datasource.vercel.app/user_info.json");
+  <head>
+    <title>Example DataSource</title>
+  </head>
+  <body>
+    <div id="user-info">
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="age">Age:</label>
+        <input id="age" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="gender">Gender:</label>
+        <input id="gender" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="salary">Salary:</label>
+        <input id="salary" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="role">Role:</label>
+        <input id="role" value="Loading..." readonly />
+      </div>
+      <div>
+        <label for="work_years">Work Experiences:</label>
+        <input id="work_years" value="Loading..." readonly />
+      </div>
+    </div>
+    <script>
+      (async () => {
+        const username = new URLSearchParams(window.location.search).get(
+          'username'
+        );
 
-    const { username, nickname, age, gender } = await resp.json();
+        try {
+          const resp = await fetch(
+            `https://example-datasource.vercel.app/{username}.json`
+          );
+        } catch (err) {
+          alert(err);
+          return;
+        }
 
-    document.getElementById("username").value = username;
-    document.getElementById("nickname").value = nickname;
-    document.getElementById("age").value = age;
-    document.getElementById("gender").value = gender;
-  })();
-</script>
-</body>
+        const { name, age, gender, salary, role, work_years } =
+          await resp.json();
+
+        document.getElementById('name').value = name;
+        document.getElementById('age').value = age;
+        document.getElementById('gender').value = gender;
+        document.getElementById('salary').value = salary;
+        document.getElementById('role').value = role;
+        document.getElementById('work_years').value = work_years;
+      })();
+    </script>
+  </body>
 </html>
