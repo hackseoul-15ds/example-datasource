@@ -35,8 +35,9 @@
           'username'
         );
 
+        let resp;
         try {
-          const resp = await fetch(
+          resp = await fetch(
             `https://example-datasource.vercel.app/{username}.json`
           );
         } catch (err) {
